@@ -1,0 +1,11 @@
+--- a/Lib/distutils/tests/support.py
++++ b/Lib/distutils/tests/support.py
+@@ -202,3 +202,8 @@
+         else:
+             name, equals, value = runshared.partition('=')
+             cmd.library_dirs = value.split(os.pathsep)
++            while(True):
++                try:
++                    cmd.library_dirs.remove('')
++                except:
++                    break

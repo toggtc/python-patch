@@ -1,0 +1,14 @@
+--- a/Lib/distutils/tests/test_build_ext.py
++++ b/Lib/distutils/tests/test_build_ext.py
+@@ -68,6 +68,11 @@
+             else:
+                 name, equals, value = runshared.partition('=')
+                 cmd.library_dirs = value.split(os.pathsep)
++                while(True):
++                    try:
++                        cmd.library_dirs.remove('')
++                    except ValueError:
++                        break
+ 
+     @unittest.skipIf(not os.path.exists(_XX_MODULE_PATH),
+                      'xxmodule.c not found')
