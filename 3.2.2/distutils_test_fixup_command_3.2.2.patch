@@ -1,11 +1,13 @@
 --- a/Lib/distutils/tests/support.py
 +++ b/Lib/distutils/tests/support.py
-@@ -202,3 +202,8 @@
+@@ -200,5 +200,8 @@
+         if runshared is None:
+             cmd.library_dirs = ['.']
          else:
-             name, equals, value = runshared.partition('=')
-             cmd.library_dirs = value.split(os.pathsep)
-+            while(True):
-+                try:
-+                    cmd.library_dirs.remove('')
-+                except:
-+                    break
+-            name, equals, value = runshared.partition('=')
+-            cmd.library_dirs = value.split(os.pathsep)
++            if sys.platform == 'darwin':
++                cmd.library_dirs = []
++            else:
++                name, equals, value = runshared.partition('=')
++                cmd.library_dirs = value.split(os.pathsep)

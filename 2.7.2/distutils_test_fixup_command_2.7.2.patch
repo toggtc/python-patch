@@ -1,14 +1,16 @@
 --- a/Lib/distutils/tests/test_build_ext.py
 +++ b/Lib/distutils/tests/test_build_ext.py
-@@ -68,6 +68,11 @@
+@@ -66,8 +66,11 @@
+             if runshared is None:
+                 cmd.library_dirs = ['.']
              else:
-                 name, equals, value = runshared.partition('=')
-                 cmd.library_dirs = value.split(os.pathsep)
-+                while(True):
-+                    try:
-+                        cmd.library_dirs.remove('')
-+                    except ValueError:
-+                        break
+-                name, equals, value = runshared.partition('=')
+-                cmd.library_dirs = value.split(os.pathsep)
++                if sys.platform == 'darwin':
++                    cmd.library_dirs = []
++                else:
++                    name, equals, value = runshared.partition('=')
++                    cmd.library_dirs = value.split(os.pathsep)
  
      @unittest.skipIf(not os.path.exists(_XX_MODULE_PATH),
                       'xxmodule.c not found')
